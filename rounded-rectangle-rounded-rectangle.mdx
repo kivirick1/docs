@@ -1,0 +1,44 @@
+---
+title: "⬜ Rounded Rectangle (roundedRectangle)"
+---
+
+```lua
+roundedRectangle(
+	x,
+	y,
+	width,
+	height, 
+	bgColor, 
+	radius, 
+	lineType, 
+	lineColor, 
+	lineSize, 
+	postgui
+)
+```
+
+### Parametreler
+
+- `x, y, width, height` (number) — Konum ve boyut.
+- `bgColor` (string/color) — Arka plan rengi (hex veya color tablosu).
+- `radius` (number, optional) — Köşe yuvarlama. Varsayılan: 10.
+- `lineType` (string, optional) — "none", "line", "dash". Varsayılan: "none".
+- `lineColor` (string/color, optional) — Çerçeve rengi.
+- `lineSize` (number, optional) — Çerçeve kalınlığı. Varsayılan: 1.5.
+- `postgui` (boolean, optional) — Öncelikli çizim. Varsayılan: false.
+
+### Örnek
+
+```lua
+roundedRectangle(
+	100, 
+	100, 
+	300, 
+	40, 
+	"#ff0000", 
+	8, 
+	"line", 
+	"#ffffff", 
+	2
+)
+```

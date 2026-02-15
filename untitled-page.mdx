@@ -1,0 +1,27 @@
+---
+title: "🌫️ Blur (setScreenBlur)"
+---
+
+```
+setScreenBlur(
+	alpha, 
+	strength, 
+	duration
+)
+```
+
+### Parametreler
+
+- `alpha` (number, 0–255) — Bulanıklık opaklığı.
+- `strength` (number) — Bulanıklık gücü (pass sayısı). Genellikle 1–4 arası.
+- `duration` (number, ms) — Bulanıklığın süresi. Varsayılan: 250.
+
+### Örnek
+
+```lua
+setScreenBlur(
+	180, 
+	2, 
+	300
+)  -- 300 ms boyunca orta şiddette blur
+```

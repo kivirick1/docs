@@ -11,12 +11,22 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Scriptler",
+        "icon": "code",
         "groups": [
           {
             "group": "UI Kit",
             "pages": [
-              "index"
+              "index",
+              "editbox",
+              "checkbox",
+              "gridlist",
+              "untitled-page",
+              "rounded-rectangle-rounded-rectangle",
+              "spinner-draw-spinner",
+              "cursor-set-cursor",
+              "utils-yardimci-fonksiyonlar",
+              "renk-sistemi"
             ]
           }
         ]

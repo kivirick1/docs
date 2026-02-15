@@ -1,0 +1,40 @@
+---
+title: "🔄 Spinner (drawSpinner)"
+---
+
+```lua
+drawSpinner(color, options)
+```
+
+### Parametreler
+
+- `color` (string/color) — Dönen dairenin rengi.
+- `options` (table, optional) — Ayarlar.
+
+### `options` Anahtarları
+
+| Anahtar | Tip | Varsayılan | Açıklama |
+
+|---|---|---|---|
+
+| `position` | table | `{x=0,y=0}` | Konum. |
+
+| `size` | number | 64 | Boyut. |
+
+| `speed` | number | 2 | Dönüş hızı (ms aralık). |
+
+| `postGUI` | boolean | false | Öncelikli çizim. |
+
+### Örnek
+
+```lua
+
+drawSpinner(
+	{"primary","hover"}, 
+	{
+    	position = {x = 200, y = 200},
+    	size = 48,
+    	speed = 3
+	}
+)
+```

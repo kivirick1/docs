@@ -1,0 +1,33 @@
+---
+title: "🛠️ Utils (Yardımcı Fonksiyonlar)"
+---
+
+### `isInBox(posX, posY, width, height)`
+
+- Fare belirtilen dikdörtgen içinde mi?
+- **Dönüş:** boolean
+
+### `getFont(index, size)`
+
+- Font nesnesi döndürür. `files/fonts/` içindeki `.ttf` dosyalarını destekler.
+- **Dönüş:** font element veya "default"
+
+### `getFontHeight(font)`
+
+- Font yüksekliği.
+- **Dönüş:** number
+
+### `getColor(colorData, index, alpha, hexOrColor)`
+
+- Renk çözümleyici. `uiColors` tablosunu veya hex string kabul eder.
+- **Dönüş:** tocolor
+
+### `formatMoney(amount)`
+
+- Para biçimlendirici (binlik ayıraç).
+- **Dönüş:** string
+
+### `createScrollBar(x, y, w, h, total, maxShow, currentShow, color, color2)`
+
+- Basit kaydırma çubuğu çizer.
+- **Dönüş:** void
