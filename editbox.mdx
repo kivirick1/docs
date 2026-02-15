@@ -1,7 +1,6 @@
 ---
 title: "🧩 Editbox (drawEdit)"
 ---
-
 ```lua
 drawEdit(
 	id, 
@@ -16,7 +15,6 @@ drawEdit(
 ```
 
 ### Parametreler
-
 - `id` (string) — Editbox benzersiz kimliği.
 - `x, y, w, h` (number) — Konum ve boyut.
 - `text` (string) — Placeholder metni.
@@ -24,45 +22,26 @@ drawEdit(
 - `customize` (table, optional) — Özelleştirme tablosu.
 
 ### `customize` Anahtarları
-
 | Anahtar | Tip | Varsayılan | Açıklama |
-
-|---|---|---|---|
-
+| --- | --- | --- | --- |
 | `radius` | number | 5 | Köşe yuvarlama. |
-
 | `alpha` | number | 1 | Opaklık (0–1). |
-
 | `backgroundColor` | table/color | `{"secondary","dark"}` | Arka plan rengi. |
-
 | `lineColor` | table/color | `{"primary","dark"}` | Çerçeve rengi. |
-
 | `line` | boolean | false | Çerçeve çizilsin mi? |
-
 | `lineOnHover` | boolean | false | Üzerine gelince çerçeve. |
-
 | `lineOnFocus` | boolean | false | Odaklanınca çerçeve. |
-
 | `textColor` | table/color | `{"text","light"}` | Metin rengi. |
-
 | `titleColor` | table/color | `{"text","hover"}` | Placeholder rengi. |
-
 | `caretColor` | table/color | `{"primary","hover"}` | İmleç rengi. |
-
 | `iconColor` | table/color | `{"primary","dark"}` | İkon rengi. |
-
 | `textFont` | string | "default" | Yazı tipi adı. |
-
 | `textSize` | number | 10 | Yazı tipi boyutu. |
-
 | `iconSize` | number | 12 | İkon boyutu. |
-
 | `disabled` | boolean | false | Devre dışı bırakma. |
-
 | `password` | boolean | false | Şifre modu (yıldızlı). |
 
 ### Örnek
-
 ```lua
 drawEdit(
 	"username", 
