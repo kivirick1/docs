@@ -4,11 +4,11 @@ title: "📋 Gridlist (drawList)"
 
 ```lua
 drawList(
-	id, 
-	x, 
-	y, 
-	w, 
-	h, 
+	id,
+	x,
+	y,
+	w,
+	h,
 	data
 )
 ```
@@ -16,69 +16,127 @@ drawList(
 ### Parametreler
 - `id` (string) — Liste benzersiz kimliği.
 - `x, y, w, h` (number) — Konum ve boyut.
-- `data` (table) — Liste verisi.
+- `data` (table, optional) — Liste verisi.
+
+### Dönüş Değerleri
+- `clickedElement` (table|nil) — Sol tıklanan satır bilgisi: `{ rowValue, cursorX, cursorY, rowIndex }`
+- `rightClickedElement` (table|nil) — Sağ tıklanan satır bilgisi: `{ rowValue, cursorX, cursorY, rowIndex }`
+
+Not: `cursorX/cursorY`, `getCursorPosition()` çıktısıdır (0–1 arası normalize).
 
 ### `data` Anahtarları
 | Anahtar | Tip | Varsayılan | Açıklama |
 | --- | --- | --- | --- |
-| `columns` | table | {} | Sütun bilgileri. |
-| `rows` | table | {} | Satır verileri. |
-| `rowHeight` | number | 30 | Satır yüksekliği. |
+| `columns` | table | `{}` | Sütun bilgileri. |
+| `rows` | table | `{}` | Satır verileri. |
+| `rowHeight` | number | `30` | Satır yüksekliği. |
 | `maxRow` | number | `math.floor(h/rowHeight)` | Görünebilir satır sayısı. |
-| `alpha` | number | 1 | Opaklık. |
+| `alpha` | number | `1` | Opaklık (0–1). |
 | `columnTextColor` | table/color | `{"text","hover"}` | Sütun başlık rengi. |
-| `columnTextFont` | string | "default" | Sütun yazı tipi. |
-| `columnTextSize` | number | 10 | Sütun yazı boyutu. |
+| `columnTextFont` | string | `"default"` | Sütun yazı tipi. |
+| `columnTextSize` | number | `10` | Sütun yazı boyutu. |
+| `columnsRowsBetweenDistance` | number | `5` | Sütun başlığı ile satırlar arası boşluk. |
 | `rowBackgroundColor` | table/color | `{"secondary","dark"}` | Satır arka planı. |
-| `rowTextColor` | table/color | `{"text","light"}` | Satır metin rengi. |
-| `rowTextFont` | string | "default" | Satır yazı tipi. |
-| `rowTextSize` | number | 10 | Satır yazı boyutu. |
-| `scrollBarColor` | table/color | `{"primary","dark"}` | Kaydırma çubuğu rengi. |
-| `scrollBarBackColor` | table/color | `{"secondary","dark"}` | Kaydırma çubuğu arka planı. |
-| `lineType` | string | "line" | "line" veya "dash". |
-| `lineDash` | number | 10 | Kesikli çizgi boyutu. |
-| `columnsRowsBetweenDistance` | number | 5 | Sütun ile satır arası boşluk. |
-| `rowBetweenDistance` | number | 2 | Satırlar arası boşluk. |
-| `disabled` | boolean | false | Devre dışı bırakma. |
+| `rowTextColor` | table/color | `{"text","light"}` | Varsayılan satır metin rengi. |
+| `rowTextFont` | string | `"default"` | Satır yazı tipi. |
+| `rowTextSize` | number | `10` | Satır yazı boyutu. |
+| `rowBetweenDistance` | number | `2` | Satırlar arası boşluk. |
+| `rowRadius` | number | `5` | Satır radius. |
+| `scrollBarColor` | table/color | `{"primary","dark"}` | Kaydırma thumb rengi. |
+| `scrollBarBackColor` | table/color | `{"secondary","dark"}` | Kaydırma arka plan rengi. |
+| `disabled` | boolean | `false` | Devre dışı bırakır (click/rightclick kaydı yapılmaz, hover efekti uygulanmaz). |
+
+### Satır Çerçevesi (line) Ayarları
+| Anahtar | Tip | Varsayılan | Açıklama |
+| --- | --- | --- | --- |
+| `line` | boolean | `false` | Satırda çerçeve çizilsin mi? |
+| `lineOnHover` | boolean | `false` | Hover olunca çerçeve çiz. |
+| `lineColor` | table/color | `{"secondary","dark"}` | Normal çerçeve rengi. |
+| `lineHoverColor` | table/color | `nil` | Hover çerçeve rengi (verilmezse `lineColor`). |
+| `lineType` | string | `"line"` | `"line"` veya `"dash"`. |
+| `lineDash` | number | `10` | Kodda dash değeri olarak kullanılır. |
 
 ### `columns` Yapısı
 ```lua
 {
-    { title = "ID", width = 0.2 },
-    { title = "İsim", width = 0.5 },
-    { title = "Durum", width = 0.3 }
+	{ title = "ID", width = 0.2 },
+	{ title = "İsim", width = 0.5 },
+	{ title = "Durum", width = 0.3 }
 }
 ```
 
-### `rows` Yapısı
+Not: `width` değerleri `w * col.width` ile hesaplanır. (Toplam 1 olacak şekilde ayarlaman iyi olur.)
+
+### `rows` Yapısı (Güncel)
+Kod artık satır hücresini **table** bekliyor:
+
 ```lua
 {
-    { "1", "Ahmet", "Aktif" },
-    { "2", "Mehmet", "Pasif" }
+	{
+		{ text = "1" },
+		{ text = "Ahmet" },
+		{ text = "Aktif", color = {"success","light"} }
+	},
+	{
+		{ text = "2" },
+		{ text = "Mehmet" },
+		{ text = "Pasif", color = {"danger","light"} }
+	}
 }
 ```
+
+### Cell (hücre) Anahtarları
+| Anahtar | Tip | Varsayılan | Açıklama |
+| --- | --- | --- | --- |
+| `text` | any | `""` | Gösterilecek içerik (`tostring` ile basılır). |
+| `color` | table/color | `rowTextColor` | Hücre rengi. |
+| `hoverColor` | table/color | `nil` | Hücre üstüne gelince yazı rengi. |
+| `isIcon` | boolean | `false` | `true` ise FontAwesome fontu kullanılır + yatay hizalama `center` olur. |
+
+### Scroll
+- Mouse wheel bind’leri global: `mouse_wheel_down/up`
+- Liste üstünde hover varken `currentIndex` güncellenir.
+- Scrollbar drag ile de kontrol edilebilir.
 
 ### Örnek
 ```lua
-drawList(
-	"playerList",
-	100, 
-	200, 
-	400, 
-	250, 
+local columns = {
+	{ title = "ID", width = 0.2 },
+	{ title = "İsim", width = 0.5 },
+	{ title = "Durum", width = 0.3 },
+}
+
+local rows = {
 	{
-    	columns = {
-        	{ title = "ID", width = 0.2 },
-        	{ title = "İsim", width = 0.5 },
-        	{ title = "Durum", width = 0.3 }
-    	},
-    	rows = {
-        	{ "1", "Ahmet", "Aktif" },
-        	{ "2", "Mehmet", "Pasif" }
-    	},
-    	rowHeight = 32,
-    	alpha = 0.95,
-    	scrollBarColor = {"primary","hover"}
+		{ text = "1" },
+		{ text = "Ahmet" },
+		{ text = "", isIcon = true, color = {"success","light"}, hoverColor = {"success","hover"} },
+	},
+	{
+		{ text = "2" },
+		{ text = "Mehmet" },
+		{ text = "", isIcon = true, color = {"danger","light"}, hoverColor = {"danger","hover"} },
+	},
+}
+
+local clicked, rightClicked = drawList(
+	"playerList",
+	100,
+	200,
+	400,
+	250,
+	{
+		columns = columns,
+		rows = rows,
+		rowHeight = 32,
+		alpha = 0.95,
+		scrollBarColor = {"primary","hover"},
+		lineOnHover = true,
 	}
 )
+
+if clicked then
+	local rowValue, cx, cy, index = clicked[1], clicked[2], clicked[3], clicked[4]
+	-- rowValue: seçilen satır
+end
 ```

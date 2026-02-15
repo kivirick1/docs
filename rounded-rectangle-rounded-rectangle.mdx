@@ -7,38 +7,43 @@ roundedRectangle(
 	x,
 	y,
 	width,
-	height, 
-	bgColor, 
-	radius, 
-	lineType, 
-	lineColor, 
-	lineSize, 
+	height,
+	bgColor,
+	radius,
+	lineType,
+	lineColor,
+	lineSize,
 	postgui
 )
 ```
 
 ### Parametreler
-
 - `x, y, width, height` (number) — Konum ve boyut.
-- `bgColor` (string/color) — Arka plan rengi (hex veya color tablosu).
-- `radius` (number, optional) — Köşe yuvarlama. Varsayılan: 10.
-- `lineType` (string, optional) — "none", "line", "dash". Varsayılan: "none".
-- `lineColor` (string/color, optional) — Çerçeve rengi.
-- `lineSize` (number, optional) — Çerçeve kalınlığı. Varsayılan: 1.5.
-- `postgui` (boolean, optional) — Öncelikli çizim. Varsayılan: false.
+- `bgColor` (table/string/number) — Arka plan rengi. `getColor(...)` ile çözümlenir (hex `"#RRGGBB"`/`"#RRGGBBAA"`, tocolor, `{...}` vb).
+- `radius` (number, optional) — Köşe yuvarlama. Varsayılan: `10`.
+- `lineType` (string, optional) — `"none"`, `"line"`, `"dash"`. Varsayılan: `"none"`.
+- `lineColor` (table/string/number, optional) — Çerçeve rengi. Varsayılan: `tocolor(255,255,255,255)`.
+- `lineSize` (number, optional)
+  - `"line"` iken: stroke kalınlığı. Varsayılan: `1.5`.
+  - `"dash"` iken: stroke kalınlığı + dash aralığı bu değerden türetilir.
+- `postgui` (boolean, optional) — `dxDrawImage` postGUI. Varsayılan: `false`.
+
+### Davranış / Notlar
+- SVG texture cache kullanır (aynı `width/height/radius` için tekrar üretmez).
+- `lineType="dash"` iken dash değeri **`lineSize * 4`** üzerinden hesaplanır ve minimum `13` yapılır.
+- İçeride `getColor(..., hexOrColor=false)` ile **tocolor** kullanılır.
 
 ### Örnek
-
 ```lua
 roundedRectangle(
-	100, 
-	100, 
-	300, 
-	40, 
-	"#ff0000", 
-	8, 
-	"line", 
-	"#ffffff", 
+	100,
+	100,
+	300,
+	40,
+	"#ff0000",
+	8,
+	"line",
+	"#ffffff",
 	2
 )
 ```

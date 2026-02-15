@@ -2,32 +2,91 @@
 title: "🛠️ Utils (Yardımcı Fonksiyonlar)"
 ---
 
-### `isInBox(posX, posY, width, height)`
+Bu dosya: `utils.lua`
 
-- Fare belirtilen dikdörtgen içinde mi?
+## `isInBox(posX, posY, width, height)`
+- Fare belirtilen dikdörtgen içinde mi? (Cursor cache üzerinden çalışır)
 - **Dönüş:** boolean
 
-### `getFont(index, size)`
+Not: Cursor koordinatı her frame `keyCallBackRender` içinde cache’lenir. Cursor yoksa her zaman `false` döner.
 
-- Font nesnesi döndürür. `files/fonts/` içindeki `.ttf` dosyalarını destekler.
-- **Dönüş:** font element veya "default"
-
-### `getFontHeight(font)`
-
-- Font yüksekliği.
-- **Dönüş:** number
-
-### `getColor(colorData, index, alpha, hexOrColor)`
-
-- Renk çözümleyici. `uiColors` tablosunu veya hex string kabul eder.
-- **Dönüş:** tocolor
-
-### `formatMoney(amount)`
-
-- Para biçimlendirici (binlik ayıraç).
+## `formatMoney(amount)`
+- Para biçimlendirir (binlik ayıraç `.`)
+- `amount` değeri `math.floor` ile tam sayıya çevrilir.
 - **Dönüş:** string
 
-### `createScrollBar(x, y, w, h, total, maxShow, currentShow, color, color2)`
-
-- Basit kaydırma çubuğu çizer.
+## `createScrollBar(x, y, w, h, total, maxShow, currentShow, color, color2)`
+- Basit scrollbar çizer.
+- Sadece `total > maxShow` ise çizer.
 - **Dönüş:** void
+
+Parametre notu:
+- `currentShow`, thumb pozisyonunu belirlemek için kullanılır.
+
+## `getFont(index, size)`
+- Font nesnesi döndürür. `files/fonts/<index>.ttf` dosyalarını destekler.
+- Bulunamazsa veya `dxCreateFont` başarısız olursa `"default"` döner.
+- Aynı `index/size` kombinasyonu cache’lenir.
+- **Dönüş:** font element veya `"default"`
+
+## `getFontHeight(font)`
+- `dxGetFontHeight(1, font)` değerini cache’ler.
+- **Dönüş:** number
+
+## `fromColor(color)`
+- Verilen rengi RGBA’ya çevirir.
+- Kabul edilen formatlar:
+  - `"#RRGGBB"` / `"#RRGGBBAA"`
+  - `tocolor(...)` ile üretilmiş number
+  - `nil` (default beyaz)
+- **Dönüş:** `r, g, b, a`
+
+## `getColor(colorData, index, alpha, hexOrColor)`
+- Renk çözümleyici.
+- `uiColors` tablosu, hex string, `tocolor` number veya table formatlarını kabul eder.
+- **Cache:** Aynı parametre kombinasyonu aynı frame içinde cache’lenir.
+- **Dönüş:**
+  - `hexOrColor=true` ise `"#RRGGBBAA"`
+  - aksi halde `tocolor(r,g,b,a)`
+
+### `colorData` formatları
+- **Number**
+  - `getColor(tocolor(...), nil, alpha)` şeklinde alpha override edebilirsin.
+  - Eğer `index` ve `alpha` da number ise özel case: `getColor(r, g, b)` gibi çalışır.
+- **String**
+  - `"#RRGGBB"` veya `"#RRGGBBAA"`
+  - `"primary"`, `"secondary"`, `"text"`, `"background"`, `"success"`, `"info"`, `"warning"`, `"danger"` gibi `uiColors` anahtarları
+- **Table**
+  - `{ r, g, b, a? }`
+  - `{ "primary", "dark", alpha? }` gibi (`uiColors[color][variant]`)
+
+## `RGBToHex(red, green, blue, alpha)`
+- RGB(A) değerini hex string’e çevirir.
+- **Dönüş:** `"#RRGGBB"` veya `"#RRGGBBAA"` (alpha verilirse)
+
+## `setColorAlpha(color, alpha)`
+- Mevcut rengi koruyup alpha’yı değiştirir.
+- **Dönüş:** tocolor
+
+## `setColorAlphaValue(color, value)`
+- Mevcut alpha’yı `value` (0–1) ile çarpar.
+- `value=nil` ise rengi aynen döndürür.
+- **Dönüş:** tocolor
+
+## `addKeyCallback(key, callback, extra)`
+- Render loop içinde “iki tuş birlikte basılıyken” callback çalıştırır.
+- `extra` verilmezse `key` ile aynı kabul edilir.
+- İçeride callback spam’ini azaltmak için delay uygulanır.
+- **Dönüş:** `table.insert(...)` sonucu (index)
+
+## `import(funcs)`
+- Dış resource’lardan export fonksiyonları kolay çağırmak için wrapper string üretir.
+- `funcs` virgülle ayrılmış fonksiyon isimleri string’i olmalı.
+- **Dönüş:** string (Lua code)
+
+### Örnek
+```lua
+loadstring(exports.mta_uikit:import("drawEdit,drawList"))()
+
+-- artık drawEdit(...) çağırabilirsin
+```

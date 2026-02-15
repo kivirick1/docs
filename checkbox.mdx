@@ -3,12 +3,12 @@ title: "☑️ Checkbox (drawCheckBox)"
 ---
 ```lua
 drawCheckBox(
-	id, 
-	x, 
-	y, 
-	w, 
-	h, 
-	text, 
+	id,
+	x,
+	y,
+	w,
+	h,
+	text,
 	customize
 )
 ```
@@ -19,38 +19,46 @@ drawCheckBox(
 - `text` (string) — Etiket metni.
 - `customize` (table, optional) — Özelleştirme tablosu.
 
+### Dönüş Değeri
+- (boolean) — Checkbox state (`true/false`).
+
 ### `customize` Anahtarları
 | Anahtar | Tip | Varsayılan | Açıklama |
 | --- | --- | --- | --- |
-| `radius` | number | 5 | Köşe yuvarlama. |
-| `alpha` | number | 1 | Opaklık (0–1). |
-| `backgroundColor` | table/color | `{"secondary","dark"}` | Arka plan rengi. |
-| `backgroundHoverColor` | table/color | `{"secondary","hover"}` | Üzerine gelince arka plan. |
-| `lineColor` | table/color | `{"primary","dark"}` | Çerçeve rengi. |
-| `lineHoverColor` | table/color | `{"primary","hover"}` | Üzerine gelince çerçeve. |
-| `textColor` | table/color | `{"text","light"}` | Metin rengi. |
-| `textHoverColor` | table/color | `{"text","hover"}` | Üzerine gelince metin. |
-| `iconColor` | table/color | `{"primary","dark"}` | İkon rengi. |
-| `textFont` | string | "default" | Yazı tipi. |
-| `textSize` | number | 10 | Yazı boyutu. |
-| `icon` | string | '' | İkon (FontAwesome). |
-| `iconSize` | number | 12 | İkon boyutu. |
-| `line` | boolean | false | Çerçeve çizilsin mi? |
-| `lineOnHover` | boolean | false | Üzerine gelince çerçeve. |
+| `radius` | number | `5` | Köşe yuvarlama. |
+| `alpha` | number | `1` | Opaklık (0–1). |
+| `backgroundColor` | table/color | `{"secondary","dark",255}` | Arka plan rengi. |
+| `backgroundHoverColor` | table/color | `{"secondary","hover",255}` | Üzerine gelince arka plan. |
+| `lineColor` | table/color | `{"primary","dark",255}` | Çerçeve rengi. |
+| `lineHoverColor` | table/color | `{"primary","hover",255}` | Üzerine gelince çerçeve. |
+| `textColor` | table/color | `{"text","light",255}` | Metin rengi. |
+| `textHoverColor` | table/color | `{"text","hover",255}` | Üzerine gelince metin rengi. |
+| `iconColor` | table/color | `{"primary","dark",255}` | İkon rengi. |
+| `textFont` | string | `"default"` | Yazı tipi adı. |
+| `textSize` | number | `10` | Yazı boyutu. |
+| `icon` | string | `''` | İkon (FontAwesome). Sadece seçiliyse çizilir. |
+| `iconSize` | number | `12` | İkon boyutu. |
+| `line` | boolean | `false` | Çerçeve çizilsin mi? |
+| `lineOnHover` | boolean | `false` | Üzerine gelince çerçeve. |
+
+### Notlar
+- Hover alanı, sadece kutu değil **kutu + yazı genişliği**: `w + 8 + textWidth`.
+- Renk tablosu formatında bu element genelde `{"renk","varyant",255}` şeklinde kullanılıyor (alpha dahil).
 
 ### Örnek
 ```lua
 drawCheckBox(
-	"remember", 
-	100, 
-	150, 
-	20, 
-	20, 
-	"Beni hatırla", {
-    	radius = 4,
-    	lineOnHover = true,
-    	iconColor = {"primary","hover"},
-    	textColor = {"text","light"}
+	"remember",
+	100,
+	150,
+	20,
+	20,
+	"Beni hatırla",
+	{
+		radius = 4,
+		lineOnHover = true,
+		iconColor = {"primary","hover",255},
+		textColor = {"text","light",255}
 	}
 )
 ```

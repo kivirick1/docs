@@ -4,24 +4,31 @@ title: "🌫️ Blur (setScreenBlur)"
 
 ```lua
 setScreenBlur(
-	alpha, 
-	strength, 
+	alpha,
+	strength,
 	duration
 )
 ```
 
 ### Parametreler
-
 - `alpha` (number, 0–255) — Bulanıklık opaklığı.
-- `strength` (number) — Bulanıklık gücü (pass sayısı). Genellikle 1–4 arası.
-- `duration` (number, ms) — Bulanıklığın süresi. Varsayılan: 250.
+- `strength` (number) — Bulanıklık gücü. Shader’a `strength` olarak gider. (Pratikte 1–4 arası güzel durur.)
+- `duration` (number, ms, optional) — Bulanıklığın süresi. Varsayılan: `250`.
+
+### Davranış
+- `setScreenBlur` çağrılınca `onClientRender` içinde blur çizimi aktif olur.
+- Süre bitince handler kaldırılır.
+- Eğer süre bitmeden tekrar çağırırsan, süre/alpha/strength **güncellenir** ve blur yeni ayarlarla devam eder.
+
+### Notlar
+- Blur shader, resource start’ta `createBlurShader()` ile otomatik oluşturulur.
+- Render target’lar ekranın **yarı çözünürlüğünde** (`screenX/2`, `screenY/2`) oluşturulur (performans için).
 
 ### Örnek
-
 ```lua
 setScreenBlur(
-	180, 
-	2, 
+	180,
+	2,
 	300
-)  -- 300 ms boyunca orta şiddette blur
+)
 ```
