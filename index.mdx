@@ -1,97 +1,320 @@
+# MTA UI Kit — Kullanım Dokümanı
+
+## 📦 Genel Bakış
+- **Editbox** (`drawEdit`) — Metin giriş alanı, scroll, imleç ve seçim desteği.
+- **Checkbox** (`drawCheckBox`) — Onay kutusu, ikon ve metin ile.
+- **Gridlist** (`drawList`) — Sütunlu liste, satır seçimi ve kaydırma.
+- **Blur** (`setScreenBlur`) — Ekran bulanıklaştırma efekti.
+- **Rounded Rectangle** (`roundedRectangle`) — Yuvarlatılmış dikdörtgen çizimi.
+- **Spinner** (`drawSpinner`) — Dönen yükleme animasyonu.
+- **Cursor** (`setCursor`) — Özel fare imleçleri.
+- **Utils** — Yardımcı fonksiyonlar (`isInBox`, `getFont`, `getColor`, `formatMoney`, `createScrollBar`).
+
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+
+## 🧩 Editbox (`drawEdit`)
+
+```lua
+drawEdit(id, x, y, w, h, text, icon, customize)
+```
+
+### Parametreler
+- `id` (string) — Editbox benzersiz kimliği.
+- `x, y, w, h` (number) — Konum ve boyut.
+- `text` (string) — Placeholder metni.
+- `icon` (string, optional) — FontAwesome ikonu (örn: `''`).
+- `customize` (table, optional) — Özelleştirme tablosu.
+
+### `customize` Anahtarları
+| Anahtar | Tip | Varsayılan | Açıklama |
+|---|---|---|---|
+| `radius` | number | 5 | Köşe yuvarlama. |
+| `alpha` | number | 1 | Opaklık (0–1). |
+| `backgroundColor` | table/color | `{"secondary","dark"}` | Arka plan rengi. |
+| `lineColor` | table/color | `{"primary","dark"}` | Çerçeve rengi. |
+| `line` | boolean | false | Çerçeve çizilsin mi? |
+| `lineOnHover` | boolean | false | Üzerine gelince çerçeve. |
+| `lineOnFocus` | boolean | false | Odaklanınca çerçeve. |
+| `textColor` | table/color | `{"text","light"}` | Metin rengi. |
+| `titleColor` | table/color | `{"text","hover"}` | Placeholder rengi. |
+| `caretColor` | table/color | `{"primary","hover"}` | İmleç rengi. |
+| `iconColor` | table/color | `{"primary","dark"}` | İkon rengi. |
+| `textFont` | string | "default" | Yazı tipi adı. |
+| `textSize` | number | 10 | Yazı tipi boyutu. |
+| `iconSize` | number | 12 | İkon boyutu. |
+| `disabled` | boolean | false | Devre dışı bırakma. |
+| `password` | boolean | false | Şifre modu (yıldızlı). |
+
+### Örnek
+```lua
+drawEdit("username", 100, 100, 250, 30, "Kullanıcı adı...", "", {
+    radius = 6,
+    alpha = 0.9,
+    lineOnFocus = true,
+    textColor = {"text","light"},
+    caretColor = {"primary","hover"},
+    textFont = "default",
+    textSize = 11
+})
+```
+
 ---
 
-## Setting up
+## ☑️ Checkbox (`drawCheckBox`)
 
-Get your documentation site up and running in minutes.
+```lua
+drawCheckBox(id, x, y, w, h, text, customize)
+```
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
+### Parametreler
+- `id` (string) — Checkbox benzersiz kimliği.
+- `x, y, w, h` (number) — Konum ve boyut.
+- `text` (string) — Etiket metni.
+- `customize` (table, optional) — Özelleştirme tablosu.
 
-## Make it yours
+### `customize` Anahtarları
+| Anahtar | Tip | Varsayılan | Açıklama |
+|---|---|---|---|
+| `radius` | number | 5 | Köşe yuvarlama. |
+| `alpha` | number | 1 | Opaklık (0–1). |
+| `backgroundColor` | table/color | `{"secondary","dark"}` | Arka plan rengi. |
+| `backgroundHoverColor` | table/color | `{"secondary","hover"}` | Üzerine gelince arka plan. |
+| `lineColor` | table/color | `{"primary","dark"}` | Çerçeve rengi. |
+| `lineHoverColor` | table/color | `{"primary","hover"}` | Üzerine gelince çerçeve. |
+| `textColor` | table/color | `{"text","light"}` | Metin rengi. |
+| `textHoverColor` | table/color | `{"text","hover"}` | Üzerine gelince metin. |
+| `iconColor` | table/color | `{"primary","dark"}` | İkon rengi. |
+| `textFont` | string | "default" | Yazı tipi. |
+| `textSize` | number | 10 | Yazı boyutu. |
+| `icon` | string | '' | İkon (FontAwesome). |
+| `iconSize` | number | 12 | İkon boyutu. |
+| `line` | boolean | false | Çerçeve çizilsin mi? |
+| `lineOnHover` | boolean | false | Üzerine gelince çerçeve. |
 
-Design a docs site that looks great and empowers your users.
+### Örnek
+```lua
+drawCheckBox("remember", 100, 150, 20, 20, "Beni hatırla", {
+    radius = 4,
+    lineOnHover = true,
+    iconColor = {"primary","hover"},
+    textColor = {"text","light"}
+})
+```
 
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
-  </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
-  </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
-  </Card>
-</Columns>
+---
 
-## Create beautiful pages
+## 📋 Gridlist (`drawList`)
 
-Everything you need to create world-class documentation.
+```lua
+drawList(id, x, y, w, h, data)
+```
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+### Parametreler
+- `id` (string) — Liste benzersiz kimliği.
+- `x, y, w, h` (number) — Konum ve boyut.
+- `data` (table) — Liste verisi.
 
-## Need inspiration?
+### `data` Anahtarları
+| Anahtar | Tip | Varsayılan | Açıklama |
+|---|---|---|---|
+| `columns` | table | {} | Sütun bilgileri. |
+| `rows` | table | {} | Satır verileri. |
+| `rowHeight` | number | 30 | Satır yüksekliği. |
+| `maxRow` | number | `math.floor(h/rowHeight)` | Görünebilir satır sayısı. |
+| `alpha` | number | 1 | Opaklık. |
+| `columnTextColor` | table/color | `{"text","hover"}` | Sütun başlık rengi. |
+| `columnTextFont` | string | "default" | Sütun yazı tipi. |
+| `columnTextSize` | number | 10 | Sütun yazı boyutu. |
+| `rowBackgroundColor` | table/color | `{"secondary","dark"}` | Satır arka planı. |
+| `rowTextColor` | table/color | `{"text","light"}` | Satır metin rengi. |
+| `rowTextFont` | string | "default" | Satır yazı tipi. |
+| `rowTextSize` | number | 10 | Satır yazı boyutu. |
+| `scrollBarColor` | table/color | `{"primary","dark"}` | Kaydırma çubuğu rengi. |
+| `scrollBarBackColor` | table/color | `{"secondary","dark"}` | Kaydırma çubuğu arka planı. |
+| `lineType` | string | "line" | "line" veya "dash". |
+| `lineDash` | number | 10 | Kesikli çizgi boyutu. |
+| `columnsRowsBetweenDistance` | number | 5 | Sütun ile satır arası boşluk. |
+| `rowBetweenDistance` | number | 2 | Satırlar arası boşluk. |
+| `disabled` | boolean | false | Devre dışı bırakma. |
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+### `columns` Yapısı
+```lua
+{
+    { title = "ID", width = 0.2 },
+    { title = "İsim", width = 0.5 },
+    { title = "Durum", width = 0.3 }
+}
+```
+
+### `rows` Yapısı
+```lua
+{
+    { "1", "Ahmet", "Aktif" },
+    { "2", "Mehmet", "Pasif" }
+}
+```
+
+### Örnek
+```lua
+local clicked = drawList("playerList", 100, 200, 400, 250, {
+    columns = {
+        { title = "ID", width = 0.2 },
+        { title = "İsim", width = 0.5 },
+        { title = "Durum", width = 0.3 }
+    },
+    rows = {
+        { "1", "Ahmet", "Aktif" },
+        { "2", "Mehmet", "Pasif" }
+    },
+    rowHeight = 32,
+    alpha = 0.95,
+    scrollBarColor = {"primary","hover"}
+})
+```
+
+---
+
+## 🌫️ Blur (`setScreenBlur`)
+
+```lua
+setScreenBlur(alpha, strength, duration)
+```
+
+### Parametreler
+- `alpha` (number, 0–255) — Bulanıklık opaklığı.
+- `strength` (number) — Bulanıklık gücü (pass sayısı). Genellikle 1–4 arası.
+- `duration` (number, ms) — Bulanıklığın süresi. Varsayılan: 250.
+
+### Örnek
+```lua
+setScreenBlur(180, 2, 300)  -- 300 ms boyunca orta şiddette blur
+```
+
+---
+
+## ⬜ Rounded Rectangle (`roundedRectangle`)
+
+```lua
+roundedRectangle(x, y, width, height, bgColor, radius, lineType, lineColor, lineSize, postgui)
+```
+
+### Parametreler
+- `x, y, width, height` (number) — Konum ve boyut.
+- `bgColor` (string/color) — Arka plan rengi (hex veya color tablosu).
+- `radius` (number, optional) — Köşe yuvarlama. Varsayılan: 10.
+- `lineType` (string, optional) — "none", "line", "dash". Varsayılan: "none".
+- `lineColor` (string/color, optional) — Çerçeve rengi.
+- `lineSize` (number, optional) — Çerçeve kalınlığı. Varsayılan: 1.5.
+- `postgui` (boolean, optional) — Öncelikli çizim. Varsayılan: false.
+
+### Örnek
+```lua
+roundedRectangle(100, 100, 300, 40, "#ff0000", 8, "line", "#ffffff", 2)
+```
+
+---
+
+## 🔄 Spinner (`drawSpinner`)
+
+```lua
+drawSpinner(color, options)
+```
+
+### Parametreler
+- `color` (string/color) — Dönen dairenin rengi.
+- `options` (table, optional) — Ayarlar.
+
+### `options` Anahtarları
+| Anahtar | Tip | Varsayılan | Açıklama |
+|---|---|---|---|
+| `position` | table | `{x=0,y=0}` | Konum. |
+| `size` | number | 64 | Boyut. |
+| `speed` | number | 2 | Dönüş hızı (ms aralık). |
+| `postGUI` | boolean | false | Öncelikli çizim. |
+
+### Örnek
+```lua
+drawSpinner({"primary","hover"}, {
+    position = {x = 200, y = 200},
+    size = 48,
+    speed = 3
+})
+```
+
+---
+
+## 🖱️ Cursor (`setCursor`)
+
+```lua
+setCursor(cursorType)
+```
+
+### Parametreler
+- `cursorType` (string) — "default", "pointer", "beam", "wait".
+
+### Örnek
+```lua
+setCursor("beam")  -- Yazı imleci
+```
+
+---
+
+## 🛠️ Utils (Yardımcı Fonksiyonlar)
+
+### `isInBox(posX, posY, width, height)`
+- Fare belirtilen dikdörtgen içinde mi?
+- **Dönüş:** boolean
+
+### `getFont(index, size)`
+- Font nesnesi döndürür. `files/fonts/` içindeki `.ttf` dosyalarını destekler.
+- **Dönüş:** font element veya "default"
+
+### `getFontHeight(font)`
+- Font yüksekliği.
+- **Dönüş:** number
+
+### `getColor(colorData, index, alpha, hexOrColor)`
+- Renk çözümleyici. `uiColors` tablosunu veya hex string kabul eder.
+- **Dönüş:** tocolor
+
+### `formatMoney(amount)`
+- Para biçimlendirici (binlik ayıraç).
+- **Dönüş:** string
+
+### `createScrollBar(x, y, w, h, total, maxShow, currentShow, color, color2)`
+- Basit kaydırma çubuğu çizer.
+- **Dönüş:** void
+
+---
+
+## 🎨 Renk Sistemi
+Renkler iki şekilde verilebilir:
+1. **Tablo:** `{"primary","dark"}`, `{"text","light"}`
+2. **Hex:** `"#ff0000"`, `"#ff000080"` (son 2 hane alpha)
+
+### Tema Anahtarları
+- `primary`, `secondary`, `text`, `background`, `success`, `info`, `warning`, `danger`
+- Alt tonlar: `light`, `dark`, `hover`
+
+---
+
+## 📝 Notlar
+- Tüm UI elemanları `onClientRender` içinde çağrılmalıdır.
+- `isInBox` ve fare tıklamaları için `_G.clicked` ve `_G.clickedTick` kullanılır.
+- Font ve renkler dahili olarak cache’lenir.
+- `roundedRectangle` ve `drawEdit` dahili `svgCreate` ve `dxDrawImage` kullanır.
+
+---
+
+## 🔗 İlişkili Dosyalar
+- `elements/editbox.lua`
+- `elements/checkbox.lua`
+- `elements/gridlist.lua`
+- `elements/blur.lua`
+- `elements/rounded.lua`
+- `elements/spinner.lua`
+- `utils.lua`
+
+---
+
+*Bu doküman `mta_uikit` sürümüne göre oluşturulmuştur.*
