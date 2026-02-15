@@ -1,0 +1,136 @@
+---
+title: "📊 Chart (drawChart)"
+---
+```lua
+drawChart(
+	id,
+	x,
+	y,
+	w,
+	h,
+	data
+)
+```
+
+### Parametreler
+- `id` (string) — Chart’ın benzersiz kimliği (cache + animasyon bu `id` üstünden tutulur).
+- `x, y, w, h` (number) — Konum ve boyut.
+- `data` (table) — Grafik datası ve ayarları.
+
+### `data` Anahtarları
+| Anahtar | Tip | Varsayılan | Açıklama |
+| --- | --- | --- | --- |
+| `type` | string | `"pie"` | Grafik tipi: `"pie"`, `"donut"` (alias: `"doughnut"`), `"bar"`, `"line"`. |
+| `values` | table | `{}` | Ana veri dizisi. (pie/donut/bar/line için) |
+| `labels` | table | `{}` | Tooltip/legend label’ları. |
+| `palette` | table | (default palette) | Dilim/bar renkleri. Hex string array (`"#RRGGBB"`). |
+| `series` | table | `{}` | Şu an line için **ilk seri** okunuyor. (`series[1].values` gibi). |
+| `customize` | table | `{}` | Özelleştirme tablosu. (`cfg` alias’ı da var) |
+
+### `customize` Anahtarları
+| Anahtar | Tip | Varsayılan | Açıklama |
+| --- | --- | --- | --- |
+| `alpha` | number | `1` | Opaklık (0–1). |
+| `postgui` | boolean | `false` | `dxDraw*` için postGUI. |
+| `backgroundColor` | table/color | `nil` | Verilirse arka plan rounded panel çizer. |
+| `radius` | number | `8` | Arka plan panel radius. |
+| `lineType` | string | `"none"` | Panel çerçevesi: `"none"`, `"line"`, `"dash"`. |
+| `lineColor` | table/color | `nil` | Panel çerçeve rengi. |
+| `lineSize` | number | `1.5` | Panel çerçeve kalınlığı. |
+| `padding` | number | `8` (pie/donut) / `10` (bar/line) | İç boşluk. |
+| `tooltip` | boolean | `false` | Hover tooltip aktif/pasif. `drawTooltip(...)` fonksiyonunu çağırır. |
+| `legend` | boolean | `false` | (pie/donut) Legend göster. |
+| `legendX` | number | `10` | (pie/donut) Legend X offset. |
+| `legendY` | number | `10` | (pie/donut) Legend Y offset. |
+| `legendFont` | string | `"default"` | Legend font. |
+| `legendSize` | number | `10` | Legend font size. |
+| `legendTextColor` | table/color | `{"text","light"}` | Legend text rengi. |
+| `legendItemHeight` | number | `fontHeight*1.4` | Legend satır yüksekliği. |
+| `legendBoxSize` | number | `10` | Legend color box boyutu. |
+
+#### Pie / Donut’a özel
+| Anahtar | Tip | Varsayılan | Açıklama |
+| --- | --- | --- | --- |
+| `startAngle` | number | `-90` | Başlangıç açısı (derece). |
+| `gapAngle` | number | `0` | Dilimler arası boşluk (derece). |
+| `thickness` | number | `rOuter*0.35` | `donut` için halka kalınlığı. |
+| `animateScaleFrom` | number | `0.92` | Pop-in animasyonda başlangıç scale’i. |
+
+#### Bar’a özel
+| Anahtar | Tip | Varsayılan | Açıklama |
+| --- | --- | --- | --- |
+| `max` | number | `auto` | Bar ölçek max (verilmezse values max). |
+| `barGap` | number | `6` | Bar arası boşluk. |
+| `gridLines` | number | `0` | Yatay grid çizgi sayısı. |
+| `gridColor` | table/color | `{"secondary","hover"}` | Grid rengi (alpha otomatik düşürülüyor). |
+
+#### Line’a özel
+| Anahtar | Tip | Varsayılan | Açıklama |
+| --- | --- | --- | --- |
+| `min` | number | `auto` | Min ölçek (auto: values min). |
+| `max` | number | `auto` | Max ölçek (auto: values max). |
+| `lineColor` | table/color | `palette[1]` | Çizgi rengi. |
+| `lineWidth` | number | `2` | Çizgi kalınlığı. |
+| `points` | boolean | `true` | Noktalar çizilsin mi. |
+| `pointSize` | number | `3` | Nokta boyutu (kare). |
+| `pointColor` | table/color | `{"text","light"}` | Nokta rengi. |
+| `hitRadius` | number | `10` | Tooltip hit radius (px). |
+
+#### Animasyon (tüm tipler)
+| Anahtar | Tip | Varsayılan | Açıklama |
+| --- | --- | --- | --- |
+| `animate` | boolean | `true` | `false` yaparsan animasyon kapatılır. |
+| `animateDuration` | number | `700` | Animasyon süresi (ms). |
+| `animateEasing` | string | `"outQuad"` | `"linear"`, `"outQuad"`, `"inQuad"`, `"inOutQuad"`. |
+| `animateKey` | any | `nil` | **Manuel retrigger** için token. Değer değişince animasyon resetlenir. |
+
+### Örnekler
+
+#### Pie
+```lua
+drawChart("pie_1", 100, 100, 260, 260, {
+	type = "pie",
+	values = { 40, 25, 20, 15 },
+	labels = { "A", "B", "C", "D" },
+	customize = {
+		tooltip = true,
+		legend = true,
+		animateDuration = 900,
+	}
+})
+```
+
+#### Donut
+```lua
+drawChart("donut_1", 400, 100, 260, 260, {
+	type = "donut",
+	values = { 60, 10, 15, 15 },
+	labels = { "HP", "Armor", "Stamina", "Other" },
+	customize = {
+		tooltip = true,
+		thickness = 35,
+		startAngle = -90,
+	}
+})
+```
+
+#### Bar (animasyonu tekrar tetikleme)
+```lua
+local key = 0
+
+-- bir yerde:
+key = key + 1
+
+drawChart("bar_1", 100, 400, 550, 180, {
+	type = "bar",
+	values = { 10, 35, 22, 40, 18, 30 },
+	labels = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" },
+	customize = {
+		tooltip = true,
+		gridLines = 3,
+		padding = 12,
+		barGap = 8,
+		animateKey = key,
+	}
+})
+```

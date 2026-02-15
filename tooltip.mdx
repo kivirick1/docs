@@ -1,0 +1,46 @@
+---
+title: "💬 Tooltip (drawTooltip)"
+---
+```lua
+drawTooltip(
+	text,
+	mx,
+	my,
+	cfg
+)
+```
+
+### Parametreler
+- `text` (string) — Gösterilecek tooltip metni.
+- `mx, my` (number) — Tooltip’in çıkacağı cursor koordinatları (absolute screen px).
+- `cfg` (table, optional) — Tooltip özelleştirme tablosu.
+
+### `cfg` Anahtarları
+| Anahtar | Tip | Varsayılan | Açıklama |
+| --- | --- | --- | --- |
+| `alpha` | number | `1` | Opaklık (0–1). |
+| `tooltipFont` | string | `"default"` | Font adı. |
+| `tooltipSize` | number | `10` | Font size. |
+| `tooltipPadding` | number | `6` | İç padding. |
+| `tooltipOffsetX` | number | `12` | Cursor’dan X offset. |
+| `tooltipOffsetY` | number | `12` | Cursor’dan Y offset. |
+| `tooltipBackgroundColor` | table/color | `{"secondary","dark"}` | Arka plan rengi. |
+| `tooltipTextColor` | table/color | `{"text","light"}` | Metin rengi. |
+| `tooltipRadius` | number | `nil` | Rounded radius (vermezsen `roundedRectangle` default’unu kullanır). |
+| `tooltipBorder` | string | `nil` | `roundedRectangle` lineType gibi: `"none"`, `"line"`, `"dash"`. |
+| `tooltipLineColor` | table/color | `nil` | Border rengi (roundedRectangle’e gider). |
+| `tooltipBorderWidth` | number | `nil` | Border kalınlığı (roundedRectangle’e gider). |
+
+### Örnek
+```lua
+local mx, my = 500, 300
+
+drawTooltip("Merhaba Tooltip", mx, my, {
+	alpha = 0.95,
+	tooltipSize = 11,
+	tooltipRadius = 6,
+	tooltipBorder = "line",
+	tooltipLineColor = {"primary", "dark"},
+	tooltipBorderWidth = 1.5,
+})
+```
