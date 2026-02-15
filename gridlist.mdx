@@ -14,57 +14,34 @@ drawList(
 ```
 
 ### Parametreler
-
 - `id` (string) — Liste benzersiz kimliği.
 - `x, y, w, h` (number) — Konum ve boyut.
 - `data` (table) — Liste verisi.
 
 ### `data` Anahtarları
-
 | Anahtar | Tip | Varsayılan | Açıklama |
-
-|---|---|---|---|
-
+| --- | --- | --- | --- |
 | `columns` | table | {} | Sütun bilgileri. |
-
 | `rows` | table | {} | Satır verileri. |
-
 | `rowHeight` | number | 30 | Satır yüksekliği. |
-
 | `maxRow` | number | `math.floor(h/rowHeight)` | Görünebilir satır sayısı. |
-
 | `alpha` | number | 1 | Opaklık. |
-
 | `columnTextColor` | table/color | `{"text","hover"}` | Sütun başlık rengi. |
-
 | `columnTextFont` | string | "default" | Sütun yazı tipi. |
-
 | `columnTextSize` | number | 10 | Sütun yazı boyutu. |
-
 | `rowBackgroundColor` | table/color | `{"secondary","dark"}` | Satır arka planı. |
-
 | `rowTextColor` | table/color | `{"text","light"}` | Satır metin rengi. |
-
 | `rowTextFont` | string | "default" | Satır yazı tipi. |
-
 | `rowTextSize` | number | 10 | Satır yazı boyutu. |
-
 | `scrollBarColor` | table/color | `{"primary","dark"}` | Kaydırma çubuğu rengi. |
-
 | `scrollBarBackColor` | table/color | `{"secondary","dark"}` | Kaydırma çubuğu arka planı. |
-
 | `lineType` | string | "line" | "line" veya "dash". |
-
 | `lineDash` | number | 10 | Kesikli çizgi boyutu. |
-
 | `columnsRowsBetweenDistance` | number | 5 | Sütun ile satır arası boşluk. |
-
 | `rowBetweenDistance` | number | 2 | Satırlar arası boşluk. |
-
 | `disabled` | boolean | false | Devre dışı bırakma. |
 
 ### `columns` Yapısı
-
 ```lua
 {
     { title = "ID", width = 0.2 },
@@ -74,7 +51,6 @@ drawList(
 ```
 
 ### `rows` Yapısı
-
 ```lua
 {
     { "1", "Ahmet", "Aktif" },
@@ -83,7 +59,6 @@ drawList(
 ```
 
 ### Örnek
-
 ```lua
 drawList(
 	"playerList",
