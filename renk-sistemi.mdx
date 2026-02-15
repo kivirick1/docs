@@ -1,11 +1,89 @@
 ---
 title: "🎨 Renk Sistemi"
 ---
-Renkler iki şekilde verilebilir:
 
-1. **Tablo:** `{"primary","dark"}`, `{"text","light"}`
-2. **Hex:** `"#ff0000"`, `"#ff000080"` (son 2 hane alpha)
+Bu resource’ta renkler temel olarak `utils.lua` içindeki `getColor(...)` fonksiyonu ile çözümlenir.
 
-### Tema Anahtarları
-- `primary`, `secondary`, `text`, `background`, `success`, `info`, `warning`, `danger`
-- Alt tonlar: `light`, `dark`, `hover`
+## Renk Verme Yöntemleri
+
+### 1) Tema tablosu (önerilen)
+```lua
+{"primary", "dark"}
+{"text", "light"}
+{"success", "hover"}
+```
+
+Bu format `uiColors` tablosundan bir rengi seçer:
+- 1. eleman: tema anahtarı
+- 2. eleman: ton (verilmezse `"normal"` denenir)
+- 3. eleman (opsiyonel): alpha (0–255)
+
+Örnek:
+```lua
+getColor({"primary", "hover"}, nil, 200) -- alpha override ile
+getColor({"primary", "hover", 120})      -- alpha tablodan
+```
+
+### 2) Hex string
+```lua
+"#ff0000"     -- kırmızı
+"#ff000080"   -- kırmızı + alpha (0x80)
+```
+
+Not: `"#RRGGBBAA"` formatında alpha son 2 haneden alınır.
+
+### 3) RGB(A) tablo
+```lua
+{ 255, 0, 0 }
+{ 255, 0, 0, 120 }
+```
+
+### 4) MTA `tocolor(...)` (number)
+```lua
+local c = tocolor(255, 0, 0, 200)
+getColor(c)
+getColor(c, nil, 150) -- alpha override
+```
+
+### 5) Direkt RGB parametre (özel kullanım)
+`getColor` fonksiyonunda bir “kısayol” var:
+
+```lua
+getColor(r, g, b)
+```
+
+Bu durumda fonksiyon `r,g,b` olarak yorumlar ve alpha’yı 255 yapar.
+
+## Tema Anahtarları (`uiColors`)
+Varsayılanlar:
+- `primary`
+- `secondary`
+- `text`
+- `background`
+- `success`
+- `info`
+- `warning`
+- `danger`
+
+Not: Kodda ayrıca örnek ekstra tema olarak `Indigo` da var.
+
+## Alt Tonlar
+Tema anahtarlarının alt tonları:
+- `light`
+- `dark`
+- `hover`
+
+Bazı temalarda ekstra tonlar olabilir (`Indigo` gibi: `normal`, `pastel`).
+
+## `getColor(colorData, index, alpha, hexOrColor)` Kısa Özet
+- `alpha` (opsiyonel): final alpha override (0–255)
+- `hexOrColor`:
+  - `true` -> `"#RRGGBBAA"` döndürür
+  - `false/nil` -> `tocolor(...)` döndürür
+
+Örnek:
+```lua
+local col1 = getColor({"primary", "dark"})
+local col2 = getColor("#ffffff80")
+local col3 = getColor({"danger", "hover"}, nil, 180, true) -- hex output
+```
