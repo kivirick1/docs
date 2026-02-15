@@ -24,10 +24,10 @@
               "blur",
               "rounded-rectangle-rounded-rectangle",
               "spinner-draw-spinner",
-              "utils-yardimci-fonksiyonlar",
-              "renk-sistemi",
               "chart",
-              "tooltip"
+              "tooltip",
+              "utils-yardimci-fonksiyonlar",
+              "renk-sistemi"
             ]
           }
         ]
