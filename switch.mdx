@@ -1,0 +1,92 @@
+---
+title: "🔘 Switch (drawSwitch)"
+---
+```lua
+drawSwitch(
+	id,
+	x,
+	y,
+	w,
+	h,
+	state,
+	cfg
+)
+```
+
+### Parametreler
+- `id` (string) — Switch state’i bu id altında tutulur.
+- `x, y, w, h` (number) — Konum ve boyut.
+- `state` (boolean, optional) — Dışarıdan kontrol etmek istersen state. `nil` ise içeride state tutulur.
+- `cfg` (table, optional) — Özelleştirme tablosu.
+
+### Dönüş Değeri
+- (boolean) — Switch state.
+
+### Ek Fonksiyonlar
+```lua
+getSwitchState(id)
+setSwitchState(id, state)
+```
+
+### `cfg` Anahtarları
+| Anahtar | Tip | Varsayılan | Açıklama |
+| --- | --- | --- | --- |
+| `alpha` | number | `1` | Opaklık (0–1). |
+| `disabled` | boolean | `false` | Devre dışı (tık kapalı, alpha düşer). |
+| `radius` | number | `h/2` | Arka kapsül radius. |
+| `border` | string | `"none"` | Border tipi (`"line"`, `"dash"`, `"none"`). |
+| `line` | boolean | `false` | `border` verilmezse `true` ise `line` çizer. |
+| `borderColor` | table/color | `{"primary","dark"}` | Border rengi. |
+| `borderWidth` | number | `1.5` | Border kalınlığı. |
+| `offColor` | table/color | `{"secondary","dark"}` | Kapalıyken arka plan. |
+| `onColor` | table/color | `{"primary","dark"}` | Açıkken arka plan. |
+| `hoverColor` | table/color | `nil` | Hover rengi (disabled değilse uygulanır). |
+| `knobPadding` | number | `2` | Knob iç padding. |
+| `knobColor` | table/color | `{"text","light"}` | Knob rengi. |
+| `knobLine` | boolean | `true` | Knob outline. |
+| `knobLineColor` | table/color | `{"secondary","hover"}` | Knob outline rengi. |
+| `animateDuration` | number | `140` | Toggle animasyon süresi (ms). |
+| `label` | string | `nil` | Switch yanında label text. |
+| `labelFont` | string | `"default"` | Label font. |
+| `labelSize` | number | `10` | Label size. |
+| `labelColor` | table/color | `{"text","light"}` | Label rengi. |
+| `labelPadding` | number | `8` | Label X padding. |
+| `tooltip` | string | `nil` | Hover’da tooltip gösterir. (disabled değilse) |
+| `onChange` | function | `nil` | State değişince callback. |
+
+### `onChange` Callback İmzası
+```lua
+onChange(state)
+```
+
+### Notlar
+- Tooltip, `drawTooltip(...)` ile çizilir. `tooltip.mdx` içindeki ayarların bir kısmını `cfg` ile override edebilirsin.
+
+### Örnekler
+
+#### Basit switch
+```lua
+local s = drawSwitch("sw_1", 100, 100, 54, 28, nil, {
+	label = "Music",
+})
+```
+
+#### Tooltip + onChange
+```lua
+drawSwitch("sw_2", 100, 150, 54, 28, nil, {
+	label = "Damage",
+	tooltip = "Hasar sistemini aç/kapat",
+	onChange = function(state)
+		outputDebugString("damage: " .. tostring(state))
+	end
+})
+```
+
+#### Disabled
+```lua
+drawSwitch("sw_3", 100, 200, 54, 28, true, {
+	label = "Disabled",
+	disabled = true,
+	tooltip = "Disabled",
+})
+```

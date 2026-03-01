@@ -1,0 +1,146 @@
+---
+title: "🎚️ Slider / Range (drawSlider, drawRangeSlider)"
+---
+
+## Slider
+```lua
+drawSlider(
+	id,
+	x,
+	y,
+	w,
+	h,
+	minValue,
+	maxValue,
+	value,
+	cfg
+)
+```
+
+### Parametreler
+- `id` (string) — Slider state’i bu id altında tutulur.
+- `x, y, w, h` (number) — Konum ve boyut.
+- `minValue, maxValue` (number) — Değer aralığı.
+- `value` (number, optional) — Dışarıdan kontrol etmek istersen anlık value (nil bırakılırsa içeride state tutulur).
+- `cfg` (table, optional) — Özelleştirme.
+
+### Dönüş Değeri
+- `(number value, boolean changed)`
+
+### Ek Fonksiyonlar
+```lua
+getSliderValue(id)
+setSliderValue(id, value)
+```
+
+### `cfg` Anahtarları (Slider)
+| Anahtar | Tip | Varsayılan | Açıklama |
+| --- | --- | --- | --- |
+| `alpha` | number | `1` | Opaklık (0–1). |
+| `disabled` | boolean | `false` | Devre dışı (drag kapanır, alpha düşer). |
+| `vertical` | boolean | `false` | Dikey slider. (üst = max) |
+| `step` | number | `nil` | Adım. Verilirse değer yuvarlanır. |
+| `padding` | number | `8` | Track iç padding. |
+| `trackHeight` | number | `auto` | Track kalınlığı. |
+| `trackRadius` | number | `auto` | Track radius. |
+| `knobRadius` | number | `auto` | Knob radius. |
+| `knob` | boolean | `true` | Knob çizilsin mi. |
+| `knobLine` | boolean | `true` | Knob outline çizilsin mi. |
+| `background` | boolean | `false` | Arka panel çizsin mi. |
+| `radius` | number | `6` | `background=true` için panel radius. |
+| `border` | string | `"none"` | `background=true` iken border tipi. |
+| `borderColor` | table/color | `nil` | `background=true` border rengi. |
+| `borderWidth` | number | `nil` | `background=true` border kalınlığı. |
+| `backgroundColor` | table/color | `{"secondary","dark"}` | Panel rengi. |
+| `trackColor` | table/color | `{"secondary","hover"}` | Track rengi. |
+| `fillColor` | table/color | hover’da `{"primary","hover"}` | Dolu kısım rengi. |
+| `knobColor` | table/color | `{"text","light"}` | Knob rengi. |
+| `knobLineColor` | table/color | `{"primary","dark"}` | Knob outline rengi. |
+| `showValue` | boolean | `false` | Değer text olarak çizilsin mi. |
+| `valueFont` | string | `"default"` | Value font. |
+| `valueSize` | number | `10` | Value font size. |
+| `valueColor` | table/color | `{"text","light"}` | Value text rengi. |
+| `valueAlign` | string | `"right"` | `dxDrawText` alignX. |
+| `valueOffsetY` | number | `18` | Value text offsetY (üstte). |
+| `valueFormatter` | function | `nil` | Value’yu string’e çevirme fonksiyonu. |
+| `onChange` | function | `nil` | Değer değişince callback. |
+
+### `onChange` Callback İmzası
+```lua
+onChange(value, rel)
+```
+- `rel`: 0–1 progress
+
+---
+
+## Range Slider (Çift knob)
+```lua
+drawRangeSlider(
+	id,
+	x,
+	y,
+	w,
+	h,
+	minValue,
+	maxValue,
+	minSelected,
+	maxSelected,
+	cfg
+)
+```
+
+### Dönüş Değeri
+- `(number minSelected, number maxSelected, boolean changed)`
+
+### Ek Fonksiyonlar
+```lua
+getRangeSliderValue(id)
+setRangeSliderValue(id, minSelected, maxSelected)
+```
+
+### `cfg` Anahtarları (Range)
+- Slider ile aynı anahtarlar geçerli.
+- `showValue=true` iken text formatı: `min .. " - " .. max`
+- `valueSeparator` ile ayırıcı değiştirilebilir.
+
+### Örnekler
+
+#### Horizontal slider
+```lua
+local v = 50
+v = drawSlider("s_1", 100, 100, 260, 34, 0, 100, v, {
+	showValue = true,
+	step = 1,
+	onChange = function(val)
+		v = val
+	end
+})
+```
+
+#### Vertical slider
+```lua
+drawSlider("s_v", 400, 100, 34, 220, 0, 100, nil, {
+	vertical = true,
+	step = 5,
+})
+```
+
+#### Range slider
+```lua
+local a, b = drawRangeSlider("r_1", 100, 200, 260, 34, 0, 100, 25, 75, {
+	showValue = true,
+	step = 1,
+	onChange = function(minV, maxV)
+		outputDebugString(minV .. " - " .. maxV)
+	end
+})
+```
+
+#### Dikey range slider
+```lua
+local a, b = drawRangeSlider("r_v", 500, 100, 34, 220, 0, 100, 20, 80, {
+	vertical = true,
+	step = 1,
+	showValue = true,
+})
+```

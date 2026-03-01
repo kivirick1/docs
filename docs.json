@@ -26,6 +26,8 @@
               "spinner-draw-spinner",
               "chart",
               "tooltip",
+              "slider",
+              "switch",
               "utils-yardimci-fonksiyonlar",
               "renk-sistemi"
             ]
